@@ -1,0 +1,60 @@
+"""Python script to handle data operations on a database."""
+
+import pymongo
+from os import environ
+
+
+"""Creating class Database"""
+
+
+class Database:
+
+    myclient = pymongo.MongoClient(environ.get("MONGO_KEY"))
+    db = myclient["contentinfo"]
+    coll = db["bloginfo"]
+
+    def insert_info(self, name, url, tags):
+        """Insert data into dictionary."""
+        blog_info = {}
+        true = True
+        while true:
+            blog_info["Name"] = name
+            blog_info["URL"] = url
+            blog_info["Tags"] = tags
+
+            inserted_data = self.coll.insert_one(blog_info)
+            print(inserted_data.inserted_id, "Was inserted")
+
+            choice = input("Do you want to continue?(y/n")
+
+            if choice == 'y':
+                continue
+
+            else:
+                true = False
+
+    def delete_info(self, user_prompt):
+        """Delete entries by deleting the name."""
+        user_prompt = input("Enter the name you want to delete:- ")
+        user_query = {"Name": user_prompt}
+        try:
+            self.coll.find_one(user_query)
+            print("Entry found...")
+            print("Deleting entry....")
+            delete_data = self.coll.delete_one(user_query)
+            print(delete_data.deleted_count, "was deleted")
+
+        except:
+            print("Your entry", user_prompt, "not found....")
+
+    def search_database(self, user_prompt):
+        """Search database to return documents."""
+        user_prompt = input("Search:- ")
+        print("Searching.....")
+        if user_prompt.lower() in self.coll.Name.lower():
+            print("Data found...")
+            print("Fetching....")
+            print(self.coll.find_one(user_prompt))
+
+        else:
+            print("Data not present in database...")
