@@ -17,7 +17,7 @@ def insert():
 @app.route('/', methods=['GET'])
 def search():
     """Call to search function."""
-    search_name = request.args.get('name??')
+    search_name = request.args.get('name')
     result = jsonify(Database.search_database(search_name))
     return result
 
