@@ -1,5 +1,5 @@
 """Python script to handle data operations on a database."""
-MONGO_KEY="mongodb+srv://identity:vedant03@cluster0.ng8sm.mongodb.net/content-info?retryWrites=true&w=majority"
+#MONGO_KEY="mongodb+srv://identity:vedant03@cluster0.ng8sm.mongodb.net/content-info?retryWrites=true&w=majority"
 
 import pymongo
 from os import environ
