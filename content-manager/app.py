@@ -14,14 +14,15 @@ def insert():
     insert_email = request.args.get('email')
     insert_URL = request.args.get('url')
     insert_Tags = request.args.get('tags')
-    result = jsonify(Database.insert_info(insert_name, insert_uname, insert_email, insert_URL, insert_Tags))
+    result = jsonify(Database().insert_info(insert_name, insert_uname, insert_email, insert_URL, insert_Tags))
+    return result
 
 
 @app.route('/', methods=['GET'])
 def search():
     """Call to search function."""
     search_name = request.args.get('name')
-    result = jsonify(Database.search_database(search_name))
+    result = jsonify(Database().search_database(search_name))
     return result
 
 
@@ -29,7 +30,15 @@ def search():
 def delete():
     """Call to delete function."""
     delete_name = request.args.get('name')
-    result = jsonify(Database.delete_info(delete_name))
+    result = jsonify(Database().delete_info(delete_name))
+    return result
+
+
+@app.route('/', methods=["PATCH"])
+def update():
+    changes = request.get_json()
+    username = request.args.get('name')
+    return jsonify(Database().update_database(username, changes))
 
 
 if __name__ == '__main__':

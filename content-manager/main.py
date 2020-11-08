@@ -42,3 +42,18 @@ class Database:
 
         else:
             print("Data not present in database...")
+
+    def update_database(self, username, changes={}):
+        """Match the user by using the username and write the changes"""
+        allowed_keys = ["name", "email", "url", "tags"]
+
+        unknown_keys = allowed_keys - list(changes.keys())
+
+        if unknown_keys:
+            return {"detail": "{}: not allowed".format(unknown_keys)}
+
+        try:
+            r = self.coll.update_one({"username": username}, {"$set": changes})
+            return r
+        except Exception:
+            return {"detail": "Something went wrong"}
