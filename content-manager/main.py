@@ -1,5 +1,4 @@
 """Python script to handle data operations on a database."""
-#MONGO_KEY="mongodb+srv://identity:vedant03@cluster0.ng8sm.mongodb.net/content-info?retryWrites=true&w=majority"
 
 import pymongo
 from os import environ
@@ -15,9 +14,9 @@ class Database:
     db = myclient["contentinfo"]
     coll = db["bloginfo"]
 
-    def insert_info(self, name, url, tags):
+    def insert_info(self, name, username, email, url, tags,):
         """Insert data into dictionary."""
-        blog_info = {"Name": name, "URL": url, "Tags": tags}
+        blog_info = {"Name": name,"Username": username, "E-mail": email, "URL": url, "Tags": tags}
 
         inserted_data = self.coll.insert_one(blog_info)
         print(inserted_data.inserted_id, "Was inserted")
