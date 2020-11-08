@@ -10,9 +10,12 @@ app = Flask(__name__)
 def insert():
     """Call to insert function."""
     insert_name = request.args.get('name')
+    insert_uname = request.args.get('username')
+    insert_email = request.args.get('email')
     insert_URL = request.args.get('url')
     insert_Tags = request.args.get('tags')
-    result = jsonify(Database.insert_info(insert_name, insert_URL, insert_Tags))
+    result = jsonify(Database.insert_info(insert_name, insert_uname, insert_email, insert_URL, insert_Tags))
+
 
 @app.route('/', methods=['GET'])
 def search():
