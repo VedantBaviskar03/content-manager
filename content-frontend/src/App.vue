@@ -2,6 +2,7 @@
   <div id="app">
     <div class="left-container">
       <InputEntry @entered="refreshContent" />
+      <Delete @deleted="refreshContent" />
     </div>
     <div class="right-container">
       <Entries ref="entryContainer" class="entries-container__parent" />
@@ -12,12 +13,14 @@
 <script>
 import Entries from "@/components/Entries";
 import InputEntry from "@/components/Input";
+import Delete from "@/components/Delete";
 
 export default {
   name: "App",
   components: {
     Entries,
-    InputEntry
+    InputEntry,
+    Delete
   },
   methods: {
     refreshContent: function() {

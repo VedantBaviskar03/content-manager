@@ -1,5 +1,6 @@
 <template>
     <div class="input-new-entry">
+        <h2>Enter insert data</h2>
         <div class="input-container">
             Name <input v-model="data.name" type="text" id="name">
             Username <input v-model="data.username" type="text" id="username">
