@@ -9,21 +9,27 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def insert():
     """Call to insert function."""
-    insert_name = request.args.get('name')
-    insert_uname = request.args.get('username')
-    insert_email = request.args.get('email')
-    insert_URL = request.args.get('url')
-    insert_Tags = request.args.get('tags')
+    json_passed = request.get_json()
+    insert_name = json_passed.get('name')
+    insert_uname = json_passed.get('username')
+    insert_email = json_passed.get('email')
+    insert_URL = json_passed.get('url')
+    insert_Tags = json_passed.get('tags')
     result = jsonify(Database().insert_info(insert_name, insert_uname, insert_email, insert_URL, insert_Tags))
     return result
 
 
 @app.route('/', methods=['GET'])
-def search():
+def get_entries():
     """Call to search function."""
-    search_name = request.args.get('name')
-    result = jsonify(Database().search_database(search_name))
+    result = jsonify(Database().get_info())
     return result
+
+
+@app.route('/', methods=["GET"])
+def search():
+    name = request.args.get("name")
+    return jsonify(Database().search_database(name))
 
 
 @app.route('/', methods=['DELETE'])

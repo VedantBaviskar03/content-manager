@@ -33,6 +33,16 @@ class Database:
         except Exception:
             return {"Failure": "{} not found".format(user_query)}
 
+    def get_info(self):
+        """Get all user info"""
+        entries = [entry for entry in self.coll.find({})]
+
+        # Make the ObjectId a string
+        for entry in entries:
+            entry["_id"] = str(entry["_id"])
+
+        return entries
+
     def search_database(self, user_prompt):
         """Search database to return documents."""
         print("Searching.....")
@@ -45,17 +55,17 @@ class Database:
         else:
             return {"Entry": "{} not found ".format(user_query)}
 
-    def update_database(self, username, changes={}):
+    def update_database(self, name, changes={}):
         """Match the user by using the username and write the changes."""
-        allowed_keys = ["name", "email", "url", "tags"]
+        allowed_keys = ["Username", "E-mail", "URL", "Tags"]
 
-        unknown_keys = allowed_keys - list(changes.keys())
+        unknown_keys = set(changes.keys()) - set(allowed_keys)
 
         if unknown_keys:
             return {"detail": "{}: not allowed".format(unknown_keys)}
 
         try:
-            r = self.coll.update_one({"username": username}, {"$set": changes})
-            return r
+            r = self.coll.update_one({"Name": name}, {"$set": changes})
+            return {"_id": r.upserted_id}
         except Exception:
             return {"detail": "Something went wrong"}
