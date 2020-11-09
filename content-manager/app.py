@@ -26,7 +26,7 @@ def search():
     return result
 
 
-@app.route('/', methods=['POST'])
+@app.route('/', methods=['DELETE'])
 def delete():
     """Call to delete function."""
     delete_name = request.args.get('name')
@@ -39,6 +39,14 @@ def update():
     changes = request.get_json()
     username = request.args.get('name')
     return jsonify(Database().update_database(username, changes))
+
+
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,POST')
+    return response
 
 
 if __name__ == '__main__':
