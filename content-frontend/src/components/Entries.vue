@@ -1,9 +1,12 @@
 <template>
     <div class="entries-container">
         <div v-for="(entry, id) in getContent" :key="id">
-            <h3>Name: {{entry.Name}}</h3>
-            <h5>E Mail: {{entry["E-mail"]}}</h5>
-            <h5>URL: {{entry["URL"]}}</h5>
+            <h4>Name: {{entry.Name}}</h4>
+            <h5>
+                <span>E Mail: {{entry["E-mail"]}}</span>
+                <span> URL: {{entry["URL"]}}</span>
+                <span> Tags: {{entry["Tags"]}}</span>
+            </h5>
         </div>
     </div>
 </template>
