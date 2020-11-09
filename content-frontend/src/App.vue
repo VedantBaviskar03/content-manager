@@ -1,17 +1,28 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <div class="left-container">
+      <InputEntry @entered="refreshContent" />
+    </div>
+    <div class="right-container">
+      <Entries ref="entryContainer" class="entries-container__parent" />
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import Entries from "@/components/Entries";
+import InputEntry from "@/components/Input";
 
 export default {
   name: "App",
   components: {
-    HelloWorld
+    Entries,
+    InputEntry
+  },
+  methods: {
+    refreshContent: function() {
+      this.$refs.entryContainer.fetchUpstream();
+    }
   }
 };
 </script>
@@ -21,8 +32,22 @@ export default {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+
+  display: flex;
+  justify-content: center;
+  width: 80%;
+  margin: 0 auto;
+  padding: 2.5em 0;
+
+  .left-container, .right-container {
+    width: 50%;
+  }
+
+  .entries-container__parent {
+    width: 50%;
+    border: 1px solid grey;
+    padding: 1em 2em;
+  }
 }
 </style>
